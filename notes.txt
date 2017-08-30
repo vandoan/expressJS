@@ -1,0 +1,22 @@
+Express notes
+
+
+$ node js, to start server
+$ nodemon, to watch for changes
+$ npm install pug --save 
+
+
+get - http verb, most common, server send info to client
+post - browser send info to server
+routes - endpoints
+npm nodemon - auto restart of server
+templates - rendering views
+template literals - string interpolation, $ -> #
+http - stateless
+cookie 	- holds state, items
+		- not cross domain, stored in that domain's name
+
+
+
+
+
