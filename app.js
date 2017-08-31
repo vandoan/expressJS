@@ -7,43 +7,36 @@ const app = express();
 // const colors = ["red","blue","green"];
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use("/static", express.static('public'));
+
 app.set("view engine", "pug");
 
-app.get("/", (req, res) => {
-	const name = req.cookies.username;
-	// res.send("howdy, there.");
-	if (name) {
-		res.render("index", { name });	
-	} else {
-		res.redirect("hello");
-	}
-	
+const mainRoutes = require("./routes"); // defaults to /routes/index.js
+const cardRoutes = require("./routes/cards");
+
+app.use(mainRoutes); 
+app.use("/cards", cardRoutes);
+
+app.use((req, res, next) => {
+	console.log("One");
+	const err = new Error("Oh, noes!");
+	next();
+	err.status = 500;
+	//next(err);
 });
 
-app.get("/cards", (req, res) => {
-	// res.locals.prompt = "Where is San Juan del Sur?";
-	res.render("card", { prompt: "Where is San Juan del Sur?", hint: "Central America." });  // Color
+app.use((req, res, next) => {
+	const err = new Error("Not Found");
+	err.status = 404;
+	next(err);
 });
 
-app.get("/hello", (req, res) => {
-	const name = req.cookies.username;
-	if (name) {
-		res.redirect("/");	
-	} else {
-		res.render("hello");
-	}
+app.use((err, req, res, next) => {
+	res.locals.error = err;
+	res.status(err.status);
+	res.render("error");
 });
 
-app.post("/hello", (req, res) => {
-	console.dir(req.body);
-	// res.json(req.body);
-	res.cookie("username", req.body.username);
-	res.redirect("/");
-});
-app.post("/goodbye", (req, res) => {
- 	res.clearCookie("username"); 	
-	res.redirect("/hello");
-});
 
 app.listen(3000, () => {
 	console.log("The application is running on localhost: 3000.");

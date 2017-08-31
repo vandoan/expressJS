@@ -2,17 +2,15 @@ extends layout.pug
 
 block content
 	section#content
-		h2= prompt
-		if hint
-			p
-				i Hint: #{hing}
-		else
-			p There is no hint.
-
+		h2= text
+		p
+			if hint != ""
+				i Hint: #{hint}
 		//- ul
 		//- 	each color in colors
 		//- 		li= color
-
-
 		
+		a(href=`/cards/${id}?side=${oppositeSideUrl}`)= oppositeSide
+		br
+		a(href="/cards") Next card
 

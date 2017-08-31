@@ -16,6 +16,7 @@ http - stateless
 cookie 	- holds state, items
 		- not cross domain, stored in that domain's name
 
+javascript string interpolation
 
 
 

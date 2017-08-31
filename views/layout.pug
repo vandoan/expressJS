@@ -2,9 +2,15 @@ doctype html
 html(lang="en")
 	head
 		title Flash Cards
+		link(rel="stylesheet", href="/static/stylesheets/style.css")
 
 		body
 			include includes/header.pug
+			if !name
+				form(action="/hello", method="post")
+					label Please enter your name:
+						input(type="text", name="username")
+					button(type="submit") Submit
 
 			block content
 
